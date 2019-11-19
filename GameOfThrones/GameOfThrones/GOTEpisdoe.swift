@@ -98,4 +98,30 @@ class GOTEpisode {
         GOTEpisode(airdate: "2017-08-20", id: 1221414, name: "Beyond the Wall", number: 6, season: 7, runtime: 60, summary: "Jon's mission continues north of the wall, but the odds against his ragged band of misfits may be greater than he imagined.", mediumImageID: "312651", originalImageID: "312651"),
         GOTEpisode(airdate: "2017-08-27", id: 1221415, name: "The Dragon and the Wolf", number: 7, season: 7, runtime: 60, summary: "Cersei sits on the Iron Throne; Daenerys sails across the Narrow Sea; Jon Snow is King in the North, and winter is finally here.", mediumImageID: "314502", originalImageID: "314502")
     ]
+    
+    static func getSection() -> [[GOTEpisode]]{
+        // 1. sort zoo animals
+        let sortedClasses = allEpisodes.sorted {$0.season < $1.season}
+        // 2. use a Set to identify unique classifications
+        let uniqueClasses = Set(sortedClasses.map{$0.season})
+        // 3. create an (empty)array of [ZooAnimal]'s array
+        var sectionsArr = Array(repeating: [GOTEpisode](), count: uniqueClasses.count)
+        // [[ZooAnimal], [ZooAnimal],[ZooAnimal]]
+        // 4. create an intialstarting index for sections
+        var currentIndex = 0
+        // 5. get current classification name (.first is the first ZooAnimal)
+        var currentClass = sortedClasses.first?.season
+        // 6. now loop over sortedZooAnimals and place in appropriate section
+        for episode in sortedClasses {
+            if episode.season == currentClass {
+                sectionsArr[currentIndex].append(episode)
+            } else {
+                currentIndex += 1
+                currentClass = episode.season
+                sectionsArr[currentIndex].append(episode)
+            }
+        }
+        
+        return sectionsArr
+    }
 }
