@@ -9,22 +9,29 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    @IBOutlet weak var episodeImage: UIImageView!
+    @IBOutlet weak var episodeLabel: UILabel!
+    @IBOutlet weak var seasonLabel: UILabel!
+    @IBOutlet weak var episodeRuntime: UILabel!
+    @IBOutlet weak var airDateLabel: UILabel!
+    
+    var detailEpisode: GOTEpisode?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateUI()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateUI() {
+        guard let selectedEpisode = detailEpisode else {
+            fatalError("couldn't find episode info")
+        }
+        navigationItem.title = selectedEpisode.name
+        episodeImage.image = UIImage(named: selectedEpisode.originalImageID)
+        episodeLabel.text = selectedEpisode.name
+        seasonLabel.text = selectedEpisode.season.description
+        episodeRuntime.text = selectedEpisode.runtime.description
+        airDateLabel.text = selectedEpisode.airdate
     }
-    */
-
 }

@@ -29,6 +29,12 @@ class ViewController: UIViewController {
         episodes = GOTEpisode.getSection()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let DetailViewController = segue.destination as? DetailViewController, let indexPath = tableView.indexPathForSelectedRow else {
+            return
+        }
+        DetailViewController.detailEpisode = episodes[indexPath.section][indexPath.row]
+    }
     
 }
 
